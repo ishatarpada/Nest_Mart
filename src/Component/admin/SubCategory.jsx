@@ -11,16 +11,16 @@ export default function SubCategory() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const Navigate = useNavigate();
 
-  const colors = [
-    'bg-red-100',
-    'bg-yellow-100',
-    'bg-green-100',
-    'bg-blue-100',
-    'bg-purple-100',
-    'bg-indigo-100',
-    'bg-pink-100',
-    'bg-orange-100',
-  ];
+  // const colors = [
+  //   'bg-red-100',
+  //   'bg-yellow-100',
+  //   'bg-green-100',
+  //   'bg-blue-100',
+  //   'bg-purple-100',
+  //   'bg-indigo-100',
+  //   'bg-pink-100',
+  //   'bg-orange-100',
+  // ];
 
   useEffect(() => {
     // Fetch category data using Axios
@@ -51,7 +51,7 @@ export default function SubCategory() {
           <Navbar />
           <div className="row g-3 items-center my-3 px-3">
             <div className="col-md-6">
-              <h1 className="font-bold text-3xl m-0 p-0 text-center">Sub category</h1>
+              <h1 className="font-bold text-4xl m-0 p-0 text-center font-serif">Sub category</h1>
             </div>
             <div className="col-md-5">
               <form className="">
@@ -89,8 +89,8 @@ export default function SubCategory() {
                 </div>
               </div>
             ) : (
-              filteredSubcategories.map((category, index) => (
-                <div key={category.id} className={`col-md-3 rounded-lg p-4 shadow border-2 hover:shadow-lg hover:border-pink-500 ${colors[index % colors.length]}`}>
+              filteredSubcategories.map((category) => (
+                <div key={category.id} className={`col-md-3 rounded-lg p-4 shadow border-2 hover:shadow-lg hover:border-green-500 `}>
                   <a href="#" className="d-flex justify-center align-items-center">
                     <img className="rounded-full h-36 w-36" src={category.image} alt={category.subCategoryName} />
                   </a>
@@ -101,8 +101,8 @@ export default function SubCategory() {
                     </a>
                   </div>
                   <div className="flex justify-center items-center mt-4 md:mt-6">
-                    <button onClick={() => Navigate(`/delete-subcategory/${category.id}`)} type='button' className={`bg-gradient-to-r from-red-400 via-red-500 to-red-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 py-2 px-4 ms-2  font-medium text-white text-xl flex justify-center items-center rounded`}><FcFullTrash /><span className='ms-2'>Delete</span></button>
-                    <button onClick={() => Navigate(`/edit-subcategory/${category.id}`)} type="button" className="py-2 px-4 ms-2  font-medium text-white text-xl flex justify-center items-center bg-gradient-to-r from-lime-400 via-lime-500 to-lime-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 rounded "><FcEditImage /><span className='ms-2'>Edit</span></button>
+                    <button onClick={() => Navigate(`/delete-subcategory/${category.id}`)} type='button' className={`bg-gradient-to-r from-red-400 via-red-500 to-red-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 py-2 px-4 ms-2  font-medium text-white text-xl flex justify-center items-center rounded`}><i className="bi bi-trash"></i><span className='ms-2'>Delete</span></button>
+                    <button onClick={() => Navigate(`/edit-subcategory/${category.id}`)} type="button" className="py-2 px-4 ms-2  font-medium text-white text-xl flex justify-center items-center bg-gradient-to-r from-lime-400 via-lime-500 to-lime-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 rounded "><i className="bi bi-pencil"></i><span className='ms-2'>Edit</span></button>
                   </div>
                 </div>
               ))

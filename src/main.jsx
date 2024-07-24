@@ -15,7 +15,10 @@ import Menu from './Component/Customer/Menu';
 import Shop from './Component/Customer/Shop';
 import Vendor from './Component/Customer/Vendor';
 import Contact from './Component/Customer/Contact';
-
+import Wishlist from './Component/Customer/Wishlist';
+// import Cart from './Component/Customer/Cart';
+import Account from './Component/Customer/Account';
+import Signup from './Component/Customer/Signup';
 
 // Admin panel
 import AdminLayout from './AdminLayout';
@@ -51,6 +54,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/menu" element={<Menu />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/contact" element={<Contact />} />
+        {/* <Route path="/cart" element={<Cart />} /> */}
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/signup" element={<Signup />} />
 
 
         {/* Admin Panel */}

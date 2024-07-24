@@ -3,6 +3,7 @@ import Header from "./Component/Customer/Header"
 import Slider from "./Component/Customer/Slider"
 import Content from "./Component/Customer/Content"
 import PopularProduct from './Component/Customer/PopularProduct';
+import Search from './Component/Customer/Search';
 import Banner from "./Component/Customer/Banner"
 import Featured from "./Component/Customer/Featured"
 import Footer from "./Component/Customer/Footer"
@@ -27,7 +28,7 @@ export default function Layout() {
         img.onload = () => {
           setTimeout(() => {
             setCurrentImageIndex(index + 1);
-          }, 100); 
+          }, 100);
         };
       } else {
         // All images loaded
@@ -52,13 +53,14 @@ export default function Layout() {
         </div>
       ) : (
         <>
-          <Header />
+          {/* <Header />
           <Slider />
           <Content />
-          <PopularProduct />
-          <Featured />
+          <PopularProduct /> */}
+          <Search />
+          {/* <Featured />
           <Banner />
-          <Footer />
+          <Footer /> */}
         </>
       )}
     </div>

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import logo from '../../assets/Image/logo.svg'
 import { Menu, MenuButton, MenuItems, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
@@ -14,6 +15,7 @@ import category9 from '../../assets/Image/category-9.svg'
 import category10 from '../../assets/Image/category-10.svg'
 
 export default function Header() {
+  const [categories, setCategories] = useState([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
@@ -27,11 +29,18 @@ export default function Header() {
   const toggleDropdown7 = () => {
     setIsOpen7(!isOpen7);
   };
+
+  useEffect(() => {
+    axios.get('http://localhost:4000/category')
+      .then(response => setCategories(response.data))
+      .catch(error => console.error("Error fetching category data:", error));
+  }, []);
+
   return (
     <>
       <header className='screen-header'>
         {/* Top Navigation */}
-        <nav className="bg-green-50 w-full py-2 header-1 shadow shadow-green-900">
+        <nav className="w-full py-2 header-1 shadow shadow-green-900">
           <div className="flex justify-center items-center mx-auto px-4 flex-wrap">
             <ul className="flex space-x-8 text-sm mx-2">
               <li><a href="#" className="text-black hover:underline">About Us</a></li>
@@ -75,20 +84,15 @@ export default function Header() {
               <img src={logo} className="h-8 w-16" alt="Logo" />
             </a>
             <form className="flex items-center border border-green-600 px-4 py-2 mx-3">
-              <select className="font-bold text-sm w-36 py-1 px-2.5 border-r-2 border-slate-200 rounded-none">
-                <option>All Categories</option>
-                <option>Milks and Dairies</option>
-                <option>Wines & Alcohol</option>
-                <option>Clothing & Beauty</option>
-                <option>Pet Foods & Toy</option>
-                <option>Fast food</option>
-                <option>Baking material</option>
-                <option>Vegetables</option>
-                <option>Fresh Seafood</option>
-                <option>Noodles & Rice</option>
-                <option>Ice cream</option>
+              <select
+                className="form-select border-0"
+                aria-label="Large select example">
+                <option value="" className='text-black'>Select Category</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.categoryName} className='text-black'>{category.categoryName}</option>
+                ))}
               </select>
-              <input type="text" placeholder="Search for items..." className="text-sm py-1 px-2.5" />
+              <input type="text" placeholder="Search for items..." className="text-md py-1 px-2.5" />
             </form>
             <form className="flex items-center shadow px-4 py-2 mx-2">
               <span className="text-xl pe-2">📍</span>
@@ -107,34 +111,38 @@ export default function Header() {
             <div className="flex items-center space-x-6 mx-3">
               <p className="flex items-center">
                 <button type="button" className="relative text-2xl me-3 rounded-circle bg-green-100 pb-2 px-1">
-                  <span className="sr-only">Notifications</span>
+                  <span className="sr-only">Compare</span>
                   🛎
                   <span className="absolute w-6 h-6 text-xs font-bold text-white bg-green-500 border-2 border-white rounded-full -right-3 -top-3">20</span>
                 </button>
                 <span>Compare</span>
               </p>
               <p className="flex items-center">
-                <button type="button" className="relative text-2xl me-3 rounded-circle bg-green-100 pb-2 px-1">
-                  <span className="sr-only">Notifications</span>
-                  ❤️
-                  <span className="absolute w-6 h-6 text-xs font-bold text-white bg-green-500 border-2 border-white rounded-full -right-3 -top-3">20</span>
-                </button>
-                <span>Wishlist</span>
+                <a href="/wishlist">
+                  <button type="button" className="relative text-2xl me-3 rounded-circle bg-green-100 pb-2 px-1">
+                    <span className="sr-only">Wishlist</span>
+                    ❤️
+                    <span className="absolute w-6 h-6 text-xs font-bold text-white bg-green-500 border-2 border-white rounded-full -right-3 -top-3">20</span>
+                  </button>
+                  <span>Wishlist</span></a>
               </p>
               <p className="flex items-center">
-                <button type="button" className="relative text-2xl me-3 rounded-circle bg-green-100 pb-2 px-1">
-                  <span className="sr-only">Notifications</span>
-                  🛒
-                  <span className="absolute w-6 h-6 text-xs font-bold text-white bg-green-500 border-2 border-white rounded-full -right-3 -top-3">20</span>
-                </button>
-                <span>Cart</span>
+                <a href="/cart">
+                  <button type="button" className="relative text-2xl me-3 rounded-circle bg-green-100 pb-2 px-1">
+                    <span className="sr-only">Cart</span>
+                    🛒
+                    <span className="absolute w-6 h-6 text-xs font-bold text-white bg-green-500 border-2 border-white rounded-full -right-3 -top-3">20</span>
+                  </button>
+                  <span>Cart</span>
+                </a>
               </p>
               <p className="flex items-center">
-                <button type="button" className="relative text-2xl me-3 rounded-circle bg-green-100 pb-2 px-1">
-                  <span className="sr-only">Notifications</span>
-                  👤
-                </button>
-                <span>Account</span>
+                <a href="/account">
+                  <button type="button" className="relative text-2xl me-3 rounded-circle bg-green-100 pb-2 px-1">
+                    <span className="sr-only">Account</span>
+                    👤
+                  </button>
+                  <span>Account</span></a>
               </p>
             </div>
           </div>
@@ -269,18 +277,21 @@ export default function Header() {
               <div className="flex items-center space-x-6 mx-3">
 
                 <p className="flex items-center">
-                  <button type="button" className="relative text-2xl me-2 rounded-circle bg-green-100 py-1 px-2">
-                    <span className="sr-only">Notifications</span>
-                    <i className="bi bi-bell"></i>
-                    <span className="absolute w-6 h-6 text-xs font-bold text-white bg-green-500 border-2 border-white rounded-full -right-3 -top-3">20</span>
-                  </button>
+                  <a href="/account">
+                    <button type="button" className="relative text-2xl me-2 rounded-circle bg-green-100 py-1 px-2">
+                      <span className="sr-only">account</span>
+                      <i className="bi bi-person"></i>
+                      <span className="absolute w-6 h-6 text-xs font-bold text-white bg-green-500 border-2 border-white rounded-full -right-3 -top-3">20</span>
+                    </button>
+                  </a>
                 </p>
                 <p className="flex items-center">
-                  <button type="button" className="relative text-2xl me-2 rounded-circle bg-green-100 py-1 px-2">
-                    <span className="sr-only">Cart</span>
-                    <i className="bi bi-heart"></i>
-                    <span className="absolute w-6 h-6 text-xs font-bold text-white bg-green-500 border-2 border-white rounded-full -right-3 -top-3">20</span>
-                  </button>
+                  <a href="/cart">
+                    <button type="button" className="relative text-2xl me-2 rounded-circle bg-green-100 py-1 px-2">
+                      <span className="sr-only">Cart</span>
+                      <i className="bi bi-heart"></i>
+                      <span className="absolute w-6 h-6 text-xs font-bold text-white bg-green-500 border-2 border-white rounded-full -right-3 -top-3">20</span>
+                    </button></a>
                 </p>
                 <button data-collapse-toggle="navbar-hamburger" type="button" className="inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-gray-500 rounded-lg hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600" aria-controls="navbar-hamburger" aria-expanded="false" onClick={toggleDrawer}>
                   <span className="sr-only">Open main menu</span>

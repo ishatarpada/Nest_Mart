@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import banner1 from '../../assets/Image/banner-1.png'
 import banner2 from '../../assets/Image/banner-2.png'
 import banner3 from '../../assets/Image/banner-3.png'
+import { FaRegArrowAltCircleRight } from "react-icons/fa";
+import { FaRegArrowAltCircleLeft } from "react-icons/fa";
 
 export default function MainContent() {
     const [categories, setCategories] = useState([]);
@@ -26,26 +28,65 @@ export default function MainContent() {
             .then(response => setCategories(response.data))
             .catch(error => console.error('Error fetching category data:', error));
     }, []);
+
+    const containerRef = useRef(null);
+
+    const scrollLeft = () => {
+        if (containerRef.current) {
+            containerRef.current.scrollBy({
+                left: -250, // Adjust the value to scroll by the width of one category item
+                behavior: 'smooth'
+            });
+        }
+    };
+
+    const scrollRight = () => {
+        if (containerRef.current) {
+            containerRef.current.scrollBy({
+                left: 250, // Adjust the value to scroll by the width of one category item
+                behavior: 'smooth'
+            });
+        }
+    };
     return (
         <div>
             <div className="container-fluid px-5 my-10">
                 <h1 className='text-3xl font-bold'>Featured Categories</h1>
 
-                <div className="d-flex gap-2 mt-5 items-center fruits-category mx-auto overflow-auto">
-                    {categories.map((category, index) => (
-                        <div key={category.id} className={`w-96 rounded-lg p-4 border-2 hover:shadow-lg hover:border-pink-500 ${colors[index % colors.length]}`}>
-                            <a href="#" className="d-flex justify-center align-items-center">
-                                <img className="rounded-full h-36 w-36" src={category.image} alt={category.categoryName} />
-                            </a>
-                            <div className="px-5 text-center">
-                                <a href="#">
-                                    <h5 className="text-xl font-bold tracking-tight text-nowrap text-center hover:text-pink-600">{category.categoryName}</h5>
-                                    <span className="text-nowrap">72 items</span>
+                <div className="container mt-5">
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                        <button className="btn rounded-full px-1" onClick={scrollLeft}>
+                            <FaRegArrowAltCircleLeft style={{ fontSize: '2rem' }} className='text-green-600'/> 
+                        </button>
+                        <button className="btn rounded-full px-1" onClick={scrollRight}>
+                            <FaRegArrowAltCircleRight style={{ fontSize: '2rem' }} className='text-green-600' /> 
+                        </button>
+                    </div>
+                    <div
+                        className="d-flex gap-2 items-center fruits-category mx-auto overflow-auto align-items-stretch"
+                        style={{ whiteSpace: 'nowrap' }}
+                        ref={containerRef}
+                    >
+                        {categories.map((category, index) => (
+                            <div
+                                key={category.id}
+                                className={`d-inline-flex flex-column justify-content-between rounded-lg p-4 border-2 hover:shadow-lg hover:border-green-500 ${colors[index % colors.length]}`}
+                                style={{ width: "350px", boxSizing: "border-box" }}
+                            >
+                                <a href="#" className="d-flex justify-content-center align-items-center mb-4">
+                                    <img className="rounded-full h-24 w-24" src={category.image} alt={category.categoryName} />
                                 </a>
+                                <div className="px-5 text-center mt-auto">
+                                    <a href="#">
+                                        <h5 className="text-xl font-bold text-center hover:text-green-600">{category.categoryName}</h5>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
+
+
             </div>
 
             <div className="relative row px-5 my-10">
