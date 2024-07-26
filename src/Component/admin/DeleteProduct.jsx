@@ -18,7 +18,7 @@ export default function DeleteProduct() {
         icon: "error"
       });
 
-      Navigate('/add-Products');
+      Navigate('/manage-Products');
     })
   }, []);
   return (

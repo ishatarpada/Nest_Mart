@@ -53,14 +53,14 @@ export default function Layout() {
         </div>
       ) : (
         <>
-          {/* <Header />
+          <Header />
           <Slider />
           <Content />
-          <PopularProduct /> */}
-          <Search />
-          {/* <Featured />
+          <PopularProduct /> 
+          {/* <Search />*/}
+          <Featured />
           <Banner />
-          <Footer /> */}
+          <Footer />
         </>
       )}
     </div>
